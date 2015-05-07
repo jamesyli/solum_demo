@@ -76,6 +76,9 @@ SERVICE_OPTS = [
     cfg.StrOpt('lp_location_url',
                default="",
                help='url to the container where LPs are stored.'),
+    cfg.StrOpt('docker_daemon_url',
+               default="unix://var/run/docker.sock",
+               help='docker daemon url.'),
 ]
 
 opt_group = cfg.OptGroup(
