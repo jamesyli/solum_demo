@@ -90,7 +90,7 @@ class LanguagePackHandler(handler.Handler):
         git_info = {
             'source_url': image.source_uri,
         }
-        api.API(context=self.context).build_lp(
+        api.API(context=self.context).build_docker_lp(
             image_id=image.id,
             git_info=git_info,
             name=image.name,

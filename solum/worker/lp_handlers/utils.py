@@ -12,11 +12,19 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
+from datetime import datetime
 import functools
+import re
 import subprocess
 import time
 import types
 
+
+def is_git_sha(revision):
+    return re.match(r'^([a-f0-9]{40})$', revision)
+
+def timestamp():
+    return datetime.utcnow().strftime('%Y%m%dt%H%M%S%f')
 
 def retry(fun):
     """Decorator to retry a call if return code is not expected."""
