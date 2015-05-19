@@ -32,7 +32,7 @@ class DockerHandler(base.BaseHandler):
         # try cache before downloading from origin
         pass
 
-    def build_lp(self, *args):
+    def build_lp(self, lp_name, git_info):
         pass
 
     def unittest_app(self, *args):
