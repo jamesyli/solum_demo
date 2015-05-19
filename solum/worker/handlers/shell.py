@@ -38,6 +38,7 @@ from solum.openstack.common import log as logging
 from solum.openstack.common import uuidutils
 import solum.uploaders.local as local_uploader
 import solum.uploaders.swift as swift_uploader
+import solum.worker.lp_handlers.docker as docker_handler
 
 
 LOG = logging.getLogger(__name__)
@@ -608,4 +609,19 @@ class Handler(object):
         img.type = 'languagepack'
         upload_task_log(ctxt, logpath, img,
                         user_env['BUILD_ID'], 'languagepack')
+        update_lp_status(ctxt, image_id, status, image_external_ref)
+
+    def build_docker_lp(self, ctxt, image_id, git_info, name, source_format,
+                        image_format, artifact_type):
+        update_lp_status(ctxt, image_id, IMAGE_STATES.BUILDING)
+        lp = get_image_by_id(ctxt, image_id)
+        lp.type = 'languagepack'
+
+        lp_handler = docker_handler.DockerHandler(ctxt, lp, 'custom', 'swift')
+        image_external_ref = lp_handler.build_lp(name, git_info)
+
+        if image_external_ref:
+            status = IMAGE_STATES.READY
+        else:
+            status = IMAGE_STATES.ERROR
         update_lp_status(ctxt, image_id, status, image_external_ref)

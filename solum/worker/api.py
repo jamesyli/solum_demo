@@ -40,3 +40,9 @@ class API(service.API):
         self._cast('build_lp', image_id=image_id, git_info=git_info, name=name,
                    source_format=source_format, image_format=image_format,
                    artifact_type=artifact_type)
+
+    def build_docker_lp(self, image_id, git_info, name, source_format, image_format,
+                        artifact_type):
+        self._cast('build_docker_lp', image_id=image_id, git_info=git_info, name=name,
+                   source_format=source_format, image_format=image_format,
+                   artifact_type=artifact_type)

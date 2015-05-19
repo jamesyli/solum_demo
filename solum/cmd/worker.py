@@ -31,7 +31,15 @@ from solum.worker.handlers import shell as shell_handler
 LOG = logging.getLogger(__name__)
 
 
+cli_opts = [
+    cfg.IntOpt('run-container-cmd-as', metavar='UID',
+               help='Run commands in containers as the user assigned '
+                    'with the UID, which can be used to constrain resource, '
+                    'e.g. disk usage, on a worker host.'),
+]
+
 def main():
+    cfg.CONF.register_cli_opts(cli_opts)
     cfg.CONF(sys.argv[1:], project='solum')
     logging.setup('solum')
     solum.TLS.trace = trace_data.TraceData()

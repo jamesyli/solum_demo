@@ -13,10 +13,14 @@
 #    limitations under the License.
 
 import functools
+import re
 import subprocess
 import time
 import types
 
+
+def is_git_sha(revision):
+    return re.match(r'^([a-f0-9]{40})$', revision)
 
 def retry(fun):
     """Decorator to retry a call if return code is not expected."""
